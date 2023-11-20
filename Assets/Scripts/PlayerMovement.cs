@@ -8,18 +8,23 @@ using UnityEngine.EventSystems;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
-    public float moveSpeed;
+    private float speed;
+    public float walkSpeed;
+    public float runSpeed;
+    bool isRunning = false;
     public float jumpForce;
     public float jumpCooldown;
     public float airMultiplier;
     bool readyToJump = true;
+    
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
+    public KeyCode runKey = KeyCode.LeftShift;
 
-    public float groundDrag;
-
+    
     [Header("Ground Check")]
+    public float groundDrag;
     public float playerHeight;
     public LayerMask whatIsGround;
     bool grounded;
@@ -33,6 +38,14 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rb;
 
+    public MovementState state;
+    public enum MovementState
+    {
+        walking,
+        sprinting,
+        air
+    }
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -44,6 +57,7 @@ public class PlayerMovement : MonoBehaviour
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
         MyInput();
         SpeedControl();
+        StateHandler();
 
         // handle drag
         if(grounded)
@@ -72,6 +86,27 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void StateHandler()
+    {
+        // Running
+        if (grounded && Input.GetKey(runKey))
+        {
+            state = MovementState.sprinting;
+            speed = runSpeed;
+        }
+        // Walking
+        else if (grounded)
+        {
+            state = MovementState.walking;
+            speed = walkSpeed;
+        }
+        // In air
+        else
+        {
+            state = MovementState.air;
+        }
+    }
+
     private void MovePlayer()
     {
         // calculate movement direction
@@ -79,10 +114,10 @@ public class PlayerMovement : MonoBehaviour
 
         //On ground
         if (grounded)
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);     
+            rb.AddForce(moveDirection.normalized * speed * 10f, ForceMode.Force);     
         // in air
         else if(!grounded)
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+            rb.AddForce(moveDirection.normalized * speed * 10f * airMultiplier, ForceMode.Force);
         
     }
 
@@ -91,9 +126,9 @@ public class PlayerMovement : MonoBehaviour
         Vector3 flatvel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
         // limit velocity if needed
-        if(flatvel.magnitude > moveSpeed)
+        if(flatvel.magnitude > speed)
         {
-            Vector3 limitedVel = flatvel.normalized * moveSpeed;
+            Vector3 limitedVel = flatvel.normalized * speed;
             rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
         }
     }
