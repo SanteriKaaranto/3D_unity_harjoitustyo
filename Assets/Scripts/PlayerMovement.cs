@@ -86,6 +86,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // Tarkistaa pelaajan tilan, eli käveleekö? juokseeko? onko hän ilmassa?
     private void StateHandler()
     {
         // Running
