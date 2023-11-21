@@ -13,6 +13,7 @@ public class Timer : MonoBehaviour
 
     private void Update()
     {
+        // Tarkastellaan onko timer päällä
         if (timerIsOn)
         {
             currentTime += Time.deltaTime;
@@ -25,9 +26,9 @@ public class Timer : MonoBehaviour
         }
     }
 
+    // Päivitetään timer
     private void UpdateTimerText()
     {
-        // Format the time as desired (e.g., minutes and seconds)
         string formattedTime = FormatTime(currentTime);
         timerText.text = formattedTime;
     }
