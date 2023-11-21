@@ -8,7 +8,6 @@ public class Respawn : MonoBehaviour
     [SerializeField] private Transform respawnPoint;
     [SerializeField] private Rigidbody PlayerRB;
 
-
     void OnTriggerEnter(Collider other)
     {
         // Kun pelaaja osuu respawn collider objectiin, viedään pelaaja respawn alueelle.

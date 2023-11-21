@@ -8,6 +8,7 @@ public class Teleporter : MonoBehaviour
     [SerializeField] private Transform player;
     [SerializeField] private Transform TeleportEnd;
     [SerializeField] private Rigidbody PlayerRB;
+    
 
     void OnTriggerEnter(Collider other)
     {
