@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private float speed;
     public float walkSpeed;
     public float runSpeed;
-    bool isRunning = false;
+
     public float jumpForce;
     public float jumpCooldown;
     public float airMultiplier;
