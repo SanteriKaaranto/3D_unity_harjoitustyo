@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class CollisionManager : MonoBehaviour
 {
     private Timer timer;
+
+    //Vaatii static, että muissa luokissa voi käyttää ilman instanssioimista
+    public static float timerValue { get; set; } 
+
     void Start()
     {
         timer = GameObject.FindObjectOfType<Timer>();
@@ -22,7 +27,9 @@ public class CollisionManager : MonoBehaviour
         }
         else if (collision.CompareTag("finish"))
         {
-            Debug.Log("collision with finish");
+            timer.StopTimer();
+            timerValue = timer.currentTime;
+            SceneManager.LoadScene(1);
         }
     }
 }

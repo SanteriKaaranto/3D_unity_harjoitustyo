@@ -5,13 +5,19 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
+
     [Header("Component")]
     public TextMeshProUGUI timerText;
 
-    private float currentTime = 0;
+    public float currentTime;
     private bool timerIsOn = false;
 
-    private void Update()
+    private void Start()
+    {
+        currentTime = 0;
+    }
+
+    public void Update()
     {
         // Tarkastellaan onko timer päällä
         if (timerIsOn)
@@ -21,7 +27,6 @@ public class Timer : MonoBehaviour
         }
         else if (!timerIsOn)
         {
-            currentTime = 0;
             UpdateTimerText();
         }
     }
@@ -48,7 +53,18 @@ public class Timer : MonoBehaviour
 
     public void StopAndResetTimer()
     {
+        currentTime = 0;
         timerIsOn = false;
+    }
+
+    public void StopTimer()
+    {
+        timerIsOn = false;
+    }
+
+    public float ReturnTime()
+    {
+        return currentTime;
     }
 }
 
