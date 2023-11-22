@@ -25,4 +25,12 @@ public class EndScreenHandler : MonoBehaviour
         int seconds = Mathf.FloorToInt(timeInSeconds - minutes * 60);
         return string.Format("{0:00}:{1:00}", minutes, seconds);
     }
+
+    void Update()
+    {
+        if (Input.GetKeyDown("escape"))
+        {
+            Application.Quit();
+        }
+    }
 }

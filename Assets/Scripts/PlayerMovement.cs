@@ -30,9 +30,7 @@ public class PlayerMovement : MonoBehaviour
     bool grounded;
 
     public Transform orientation;
-
     Vector3 moveDirection;
-
     float horizontalInput;
     float verticalInput;
 
